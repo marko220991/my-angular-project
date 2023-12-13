@@ -3,7 +3,10 @@
         <form [formGroup]="newRecipeForm" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button 
+                    type="submit" 
+                    class="btn btn-success"
+                    [disabled]="!newRecipeForm.valid">Save</button>
                     <button type="button" class="btn btn-danger">Cancel</button>
                 </div>
             </div>
@@ -46,15 +49,31 @@
                     <div 
                     class="row" 
                     *ngFor="let ingredient of newRecipeForm.get('ingredients')['controls'], let i = index"
-                    [formGroupName]="i">
+                    [formGroupName]="i"
+                    style="margin-top: 10px;">
                         <div class="col-xs-8">
-                            <input type="text" class="form-control" formControlName="name">
+                            <input 
+                            type="text" 
+                            class="form-control" 
+                            formControlName="name">
                         </div>
                         <div class="col-xs-2">
-                            <input type="number" class="form-control" formControlName="amount">
+                            <input 
+                            type="number" 
+                            class="form-control" 
+                            formControlName="amount">
                         </div>
                         <div class="col-xs-2">
                             <button type="button" class="btn btn-danger">X</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button 
+                            type="button"
+                            class="btn btn-success" 
+                            (click)="onAddIngredient()">Add Ingredient</button>
                         </div>
                     </div>
                 </div>
