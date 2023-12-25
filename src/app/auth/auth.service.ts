@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandler, Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -28,18 +28,7 @@ export class AuthService {
           password: password,
           returnSecureToken: true
         }
-      ).pipe(catchError(errorRes => {
-        let errorMessage = 'An errorOccured!';
-        if (!errorRes.error || !errorRes.error.error) {
-          return throwError(errorMessage);
-        }
-        switch(errorRes.error.error.message) {
-          case 'EMAIL_EXISTS':
-            errorMessage = 'This email address already exists!';
-        }
-        return throwError(errorMessage);
-      })
-    );
+      ).pipe(catchError(this.handleErrors));
   }
 
   login(email: string, password: string) {
@@ -50,6 +39,22 @@ export class AuthService {
         password: password,
         returnSecureToken: true
       }
-    );
+    ).pipe(catchError(this.handleErrors));
   }
+
+  private handleErrors(errorRes: HttpErrorResponse) {
+      let errorMessage = 'An error occured!';
+      if (!errorRes.error || !errorRes.error.error) {
+        return throwError(errorMessage);
+      }
+      switch(errorRes.error.error.message) {
+        case 'EMAIL_EXISTS':
+          errorMessage = 'This email address already exists!';
+          break;
+        case 'INVALID_LOGIN_CREDENTIALS':
+          errorMessage = 'The credentianls are not valid! Please check your email and password!';
+          break;
+      }
+      return throwError(errorMessage);
+    }
 }
