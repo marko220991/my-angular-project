@@ -24,16 +24,10 @@ export class DataStorageService {
     });
   }
 
-  fetchData() {
-    return this.authService.user.pipe(take(1), 
-    exhaustMap(user => {
-      return this.http.get<Recipe[]>(
-        'https://recipe-book-ng-course-ffc46-default-rtdb.firebaseio.com/recipes.json',
-        {
-          params: new HttpParams().set('auth', user.token)
-        }
-        );
-      }), 
+  fetchData() { 
+  return this.http.get<Recipe[]>(
+    'https://recipe-book-ng-course-ffc46-default-rtdb.firebaseio.com/recipes.json'
+    ).pipe(
       map(recipes => {
         return recipes.map(
           recipe => {
