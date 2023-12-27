@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthComponent } from './auth/auth.component';
 
 const appRouter: Routes = [
   {path: '', redirectTo: '/recipe', pathMatch: 'full'},
-  {path: 'recipe', loadChildren: () => import('./recipes/recipes.module').then(module => module.RecipesModule)}
+  {path: 'recipe', loadChildren: () => import('./recipes/recipes.module').then(module => module.RecipesModule)},
+  {path: 'shopping-list', loadChildren: () => import('./shopping-list/shopping-list.module').then(module => module.ShoppingListModule)},
+  {path: 'auth', loadChildren: () => import('./auth/auth.module').then(module => module.AuthModule)}
 ]
 
 @NgModule({
