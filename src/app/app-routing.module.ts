@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const appRouter: Routes = [
   {path: '', redirectTo: '/recipe', pathMatch: 'full'},
@@ -13,7 +13,7 @@ const appRouter: Routes = [
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule.forRoot(appRouter)
+    RouterModule.forRoot(appRouter, {preloadingStrategy: PreloadAllModules})
   ],
   exports: [RouterModule]
 })
