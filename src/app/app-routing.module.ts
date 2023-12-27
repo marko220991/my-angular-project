@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 
 const appRouter: Routes = [
-  {path: '', redirectTo: '/recipe', pathMatch: 'full'}
+  {path: '', redirectTo: '/recipe', pathMatch: 'full'},
+  {path: 'recipe', loadChildren: () => import('./recipes/recipes.module').then(module => module.RecipesModule)}
 ]
 
 @NgModule({
